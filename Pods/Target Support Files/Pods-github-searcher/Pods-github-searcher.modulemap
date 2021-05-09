@@ -1,0 +1,6 @@
+framework module Pods_github_searcher {
+  umbrella header "Pods-github-searcher-umbrella.h"
+
+  export *
+  module * { export * }
+}
