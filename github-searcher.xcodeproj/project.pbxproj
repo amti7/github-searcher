@@ -18,6 +18,8 @@
 		8E4D65082647F13D0080CF38 /* DependencyContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4D65072647F13D0080CF38 /* DependencyContainer.swift */; };
 		8E4D650C2647F20B0080CF38 /* SearchCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4D650B2647F20B0080CF38 /* SearchCoordinator.swift */; };
 		8E4D65102647F21C0080CF38 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4D650F2647F21C0080CF38 /* SearchViewModel.swift */; };
+		8E4D651E264836180080CF38 /* ResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4D651D264836180080CF38 /* ResultsViewController.swift */; };
+		8E4D6521264836280080CF38 /* ResultsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4D6520264836280080CF38 /* ResultsCoordinator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +38,8 @@
 		8E4D65072647F13D0080CF38 /* DependencyContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyContainer.swift; sourceTree = "<group>"; };
 		8E4D650B2647F20B0080CF38 /* SearchCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCoordinator.swift; sourceTree = "<group>"; };
 		8E4D650F2647F21C0080CF38 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
+		8E4D651D264836180080CF38 /* ResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsViewController.swift; sourceTree = "<group>"; };
+		8E4D6520264836280080CF38 /* ResultsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsCoordinator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,6 +90,7 @@
 		8E4D64EA2647EA320080CF38 /* Feature */ = {
 			isa = PBXGroup;
 			children = (
+				8E4D651C264836020080CF38 /* Results */,
 				8E4D650E2647F20E0080CF38 /* Search */,
 			);
 			path = Feature;
@@ -97,6 +102,7 @@
 				8E4D65012647F0E70080CF38 /* AppCoordinator.swift */,
 				8E4D65042647F1120080CF38 /* Coordinator.swift */,
 				8E4D650B2647F20B0080CF38 /* SearchCoordinator.swift */,
+				8E4D6520264836280080CF38 /* ResultsCoordinator.swift */,
 			);
 			path = Coordinator;
 			sourceTree = "<group>";
@@ -132,6 +138,14 @@
 				8E4D64D82647E8500080CF38 /* SearchViewController.swift */,
 			);
 			path = Search;
+			sourceTree = "<group>";
+		};
+		8E4D651C264836020080CF38 /* Results */ = {
+			isa = PBXGroup;
+			children = (
+				8E4D651D264836180080CF38 /* ResultsViewController.swift */,
+			);
+			path = Results;
 			sourceTree = "<group>";
 		};
 		D9C5EEA84DB4256FA00F1D3E /* Pods */ = {
@@ -265,10 +279,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				8E4D65022647F0E70080CF38 /* AppCoordinator.swift in Sources */,
+				8E4D6521264836280080CF38 /* ResultsCoordinator.swift in Sources */,
 				8E4D64D92647E8500080CF38 /* SearchViewController.swift in Sources */,
 				8E4D65102647F21C0080CF38 /* SearchViewModel.swift in Sources */,
 				8E4D65052647F1120080CF38 /* Coordinator.swift in Sources */,
 				8E4D64D52647E8500080CF38 /* AppDelegate.swift in Sources */,
+				8E4D651E264836180080CF38 /* ResultsViewController.swift in Sources */,
 				8E4D65082647F13D0080CF38 /* DependencyContainer.swift in Sources */,
 				8E4D64D72647E8500080CF38 /* SceneDelegate.swift in Sources */,
 				8E4D650C2647F20B0080CF38 /* SearchCoordinator.swift in Sources */,

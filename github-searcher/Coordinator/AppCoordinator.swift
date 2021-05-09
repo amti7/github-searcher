@@ -20,8 +20,22 @@ final class AppCoordinator: Coordinator {
 
     func start() {
         let searchCoordinator = SearchCoordinator(dependencyContainer: dependencyContainer, navigationController: navigationController)
+        searchCoordinator.delegate = self
         self.childCoordinators.append(searchCoordinator)
         searchCoordinator.start()
     }
+    
+    func startResultsViewController() {
+        let resultsCoordinator = ResultsCoordinator(dependencyContainer: dependencyContainer, navigationController: navigationController)
+        self.childCoordinators.append(resultsCoordinator)
+        resultsCoordinator.start()
+    }
 }
+
+extension AppCoordinator: SearchCoordinatorDelegate {
+    func searchDidTapped(coordinator: SearchCoordinator) {
+        startResultsViewController()
+    }
+}
+
 

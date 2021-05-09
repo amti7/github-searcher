@@ -8,7 +8,27 @@
 import UIKit
 import TinyConstraints
 
+protocol SearchViewControllerDelegate: AnyObject {
+    func searchDidTapped(viewController: SearchViewController)
+}
+
 final class SearchViewController: UIViewController {
+    
+    weak var delegate: SearchViewControllerDelegate?
+    
+    private struct Constats {
+        static let buttonWidth: CGFloat = 120
+        static let imageSize: CGFloat = 200
+        static let textFieldWidth: CGFloat = 300
+        static let elementHeight: CGFloat = 44
+        static let borderWidth: CGFloat = 1.0
+        static let tinyOffset: CGFloat = 4
+        static let bigOffset: CGFloat = 32
+        static let cornerRadius: CGFloat = 20
+        static let githubIconName = "github-logo"
+        static let labelTitle = "Search for github repository"
+        static let searchString = "SEARCH"
+    }
     
     private let viewModel: SearchViewModelType
     
@@ -50,47 +70,48 @@ final class SearchViewController: UIViewController {
     }
     
     private func setupLogoImageView() {
-        logoImageView.bottomToTop(of: infoLabel, offset: -4)
-        logoImageView.width(200)
-        logoImageView.height(200)
+        logoImageView.bottomToTop(of: infoLabel, offset: -Constats.tinyOffset)
+        logoImageView.width(Constats.imageSize)
+        logoImageView.height(Constats.imageSize)
         logoImageView.centerX(to: view)
         
-        logoImageView.image = UIImage(named: "github-logo")
+        logoImageView.image = UIImage(named: Constats.githubIconName)
     }
     
     private func setupInfoLabel() {
-        infoLabel.bottomToTop(of: textField, offset: -4)
-        infoLabel.width(300)
-        infoLabel.height(88)
+        infoLabel.bottomToTop(of: textField, offset: -Constats.tinyOffset)
+        infoLabel.width(Constats.textFieldWidth)
+        infoLabel.height(Constats.elementHeight * 2)
         infoLabel.center(in: view)
         infoLabel.textAlignment = .center
-        infoLabel.text = "Search for github repository"
+        infoLabel.text = Constats.labelTitle
     }
     
     private func setupTextfield() {
         textField.center(in: view)
-        textField.width(300)
-        textField.height(44)
+        textField.width(Constats.textFieldWidth)
+        textField.height(Constats.elementHeight)
         textField.layer.borderColor = UIColor.black.cgColor
-        textField.layer.borderWidth = 1.0
-        textField.layer.cornerRadius = 20
+        textField.layer.borderWidth = Constats.borderWidth
+        textField.layer.cornerRadius = Constats.cornerRadius
         textField.textAlignment = .center
     }
     
     private func setupSearchButton() {
-        searchButton.topToBottom(of: textField, offset: 32)
+        searchButton.topToBottom(of: textField, offset: Constats.bigOffset)
         searchButton.centerX(to: view)
-        searchButton.width(120)
-        searchButton.height(44)
+        searchButton.width(Constats.buttonWidth)
+        searchButton.height(Constats.elementHeight)
         
         searchButton.titleLabel?.textColor = .white
-        searchButton.setTitle("SEARCH", for: .normal)
+        searchButton.setTitle(Constats.searchString, for: .normal)
         searchButton.backgroundColor = .black
-        searchButton.layer.cornerRadius = 20
+        searchButton.layer.cornerRadius = Constats.cornerRadius
         searchButton.addTarget(self, action: #selector(searchTapped), for: .touchUpInside)
     }
     
     @objc private func searchTapped() {
         print("\(textField.text)")
+        delegate?.searchDidTapped(viewController: self)
     }
 }
