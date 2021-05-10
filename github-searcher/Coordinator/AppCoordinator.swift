@@ -10,31 +10,29 @@ import UIKit
 final class AppCoordinator: Coordinator {
     
     var childCoordinators = [Coordinator]()
-    var dependencyContainer: DependencyContainerType
     var navigationController: UINavigationController
     
-    init(dependencyContainer: DependencyContainerType, navigationController: UINavigationController) {
-        self.dependencyContainer = dependencyContainer
+    init(navigationController: UINavigationController) {
         self.navigationController = navigationController
     }
 
     func start() {
-        let searchCoordinator = SearchCoordinator(dependencyContainer: dependencyContainer, navigationController: navigationController)
+        let searchCoordinator = SearchCoordinator(navigationController: navigationController)
         searchCoordinator.delegate = self
         self.childCoordinators.append(searchCoordinator)
         searchCoordinator.start()
     }
     
-    func startResultsViewController() {
-        let resultsCoordinator = ResultsCoordinator(dependencyContainer: dependencyContainer, navigationController: navigationController)
+    func startResultsViewController(results: [Repository]) {
+        let resultsCoordinator = ResultsCoordinator(navigationController: navigationController, results: results)
         self.childCoordinators.append(resultsCoordinator)
         resultsCoordinator.start()
     }
 }
 
 extension AppCoordinator: SearchCoordinatorDelegate {
-    func searchDidTapped(coordinator: SearchCoordinator) {
-        startResultsViewController()
+    func didReceive(coordinator: SearchCoordinator, results: [Repository]) {
+        startResultsViewController(results: results)
     }
 }
 

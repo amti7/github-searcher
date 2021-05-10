@@ -9,16 +9,18 @@ import UIKit
 
 class ResultsCoordinator: Coordinator {
     var childCoordinators = [Coordinator]()
-    var dependencyContainer: DependencyContainerType
     var navigationController: UINavigationController
+    
+    private var results: [Repository]
         
-    init(dependencyContainer: DependencyContainerType, navigationController: UINavigationController) {
-        self.dependencyContainer = dependencyContainer
+    init(navigationController: UINavigationController, results: [Repository]) {
         self.navigationController = navigationController
+        self.results = results
     }
                 
     func start() {
-        let viewController = ResultsViewController()
+        let viewModel = ResultsViewModel(results: results)
+        let viewController = ResultsViewController(viewModel: viewModel)
         navigationController.pushViewController(viewController, animated: true)
     }
 }

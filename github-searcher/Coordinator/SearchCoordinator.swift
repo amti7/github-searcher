@@ -8,18 +8,16 @@
 import UIKit
 
 protocol SearchCoordinatorDelegate: AnyObject {
-    func searchDidTapped(coordinator: SearchCoordinator)
+    func didReceive(coordinator: SearchCoordinator, results: [Repository])
 }
 
 class SearchCoordinator: Coordinator {
     var childCoordinators = [Coordinator]()
-    var dependencyContainer: DependencyContainerType
     var navigationController: UINavigationController
     
     weak var delegate: SearchCoordinatorDelegate?
     
-    init(dependencyContainer: DependencyContainerType, navigationController: UINavigationController) {
-        self.dependencyContainer = dependencyContainer
+    init(navigationController: UINavigationController) {
         self.navigationController = navigationController
     }
                 
@@ -33,7 +31,7 @@ class SearchCoordinator: Coordinator {
 }
 
 extension SearchCoordinator: SearchViewControllerDelegate {
-    func searchDidTapped(viewController: SearchViewController) {
-        delegate?.searchDidTapped(coordinator: self)
+    func didReceive(viewController: SearchViewController, results: [Repository]) {
+        delegate?.didReceive(coordinator: self, results: results)
     }
 }

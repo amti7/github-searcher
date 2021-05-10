@@ -11,6 +11,16 @@ import TinyConstraints
 final class ResultsViewController: UIViewController {
     
     private var tableView = UITableView()
+    private var viewModel: ResultsViewModelType
+    
+    init(viewModel: ResultsViewModelType) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,7 +39,7 @@ final class ResultsViewController: UIViewController {
 
 extension ResultsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return viewModel.numberOfItems()
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -39,13 +49,13 @@ extension ResultsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "cell")
         
-        cell.textLabel?.text = "cell \(indexPath.row)"
-        cell.detailTextLabel?.text = ""
+        let item = viewModel.getItem(index: indexPath.row)
+        
+        cell.textLabel?.text = item.fullName
+        cell.detailTextLabel?.text = item.language
         
         return cell
     }
-    
-    
 }
 
 

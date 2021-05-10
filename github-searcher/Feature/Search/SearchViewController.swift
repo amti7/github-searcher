@@ -9,7 +9,7 @@ import UIKit
 import TinyConstraints
 
 protocol SearchViewControllerDelegate: AnyObject {
-    func searchDidTapped(viewController: SearchViewController)
+    func didReceive(viewController: SearchViewController, results: [Repository])
 }
 
 final class SearchViewController: UIViewController {
@@ -30,7 +30,7 @@ final class SearchViewController: UIViewController {
         static let searchString = "SEARCH"
     }
     
-    private let viewModel: SearchViewModelType
+    private var viewModel: SearchViewModelType
     
     private let logoImageView = UIImageView()
     private let infoLabel = UILabel()
@@ -41,6 +41,7 @@ final class SearchViewController: UIViewController {
         self.viewModel = viewModel
 
         super.init(nibName: nil, bundle: nil)
+        self.viewModel.delegate = self
     }
 
     required init?(coder: NSCoder) {
@@ -111,7 +112,12 @@ final class SearchViewController: UIViewController {
     }
     
     @objc private func searchTapped() {
-        print("\(textField.text)")
-        delegate?.searchDidTapped(viewController: self)
+        viewModel.search(repoName: textField.text ?? "")
+    }
+}
+
+extension SearchViewController: SearchViewModelDelegate {
+    func didReceive(_ viewModel: SearchViewModelType, results: [Repository]) {
+        delegate?.didReceive(viewController: self, results: results)
     }
 }

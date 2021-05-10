@@ -11,28 +11,20 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
     private var appCoordinator: AppCoordinator?
-    private lazy var dependencyContainer = DependencyContainer()
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         
-        setupWindow()
-        
         let navigationController = UINavigationController()
-
-        appCoordinator = AppCoordinator(dependencyContainer: dependencyContainer, navigationController: navigationController)
+        appCoordinator = AppCoordinator(navigationController: navigationController)
         appCoordinator?.start()
+        
         guard let windowScene = (scene as? UIWindowScene) else { return }
-
         window = UIWindow(frame: windowScene.coordinateSpace.bounds)
         window?.windowScene = windowScene
-        window?.rootViewController = navigationController //SearchViewController(viewModel: SearchViewModel())
+        window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
     }
     
-    private func setupWindow() {
-        
-    }
-
     func sceneDidDisconnect(_ scene: UIScene) {
         // Called as the scene is being released by the system.
         // This occurs shortly after the scene enters the background, or when its session is discarded.
