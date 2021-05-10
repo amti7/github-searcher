@@ -25,6 +25,7 @@ class SearchCoordinator: Coordinator {
         let viewModel = SearchViewModel()
         let viewController = SearchViewController(viewModel: viewModel)
         viewController.delegate = self
+        viewModel.delegate = viewController
         
         navigationController.pushViewController(viewController, animated: true)
     }

@@ -10,6 +10,11 @@ import TinyConstraints
 
 final class ResultsViewController: UIViewController {
     
+    private struct Constants {
+        static let cellHeight: CGFloat = 100
+        static let cellName = "cell"
+    }
+    
     private var tableView = UITableView()
     private var viewModel: ResultsViewModelType
     
@@ -43,11 +48,11 @@ extension ResultsViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 100
+        return Constants.cellHeight
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "cell")
+        let cell = UITableViewCell(style: .subtitle, reuseIdentifier: Constants.cellName)
         
         let item = viewModel.getItem(index: indexPath.row)
         
@@ -56,6 +61,14 @@ extension ResultsViewController: UITableViewDelegate, UITableViewDataSource {
         
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        viewModel.didSelectRow(index: indexPath.row)
+    }
 }
 
-
+extension ResultsViewController: ResultsViewModelDelegate {
+    func didSelectRepo(_ viewModel: ResultsViewModelType, repoURL: URL) {
+        UIApplication.shared.open(repoURL)
+    }
+}
