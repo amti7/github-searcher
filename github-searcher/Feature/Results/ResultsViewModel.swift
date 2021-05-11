@@ -14,6 +14,7 @@ protocol ResultsViewModelDelegate: AnyObject {
 protocol ResultsViewModelType {
     var delegate: ResultsViewModelDelegate? { get set }
     
+    func isEmpty() -> Bool
     func numberOfItems() -> Int
     func getItem(index: Int) -> Repository
     func didSelectRow(index: Int)
@@ -29,12 +30,16 @@ final class ResultsViewModel: ResultsViewModelType {
         self.results = results
     }
     
+    func isEmpty() -> Bool {
+        return results.isEmpty ? true : false
+    }
+    
     func numberOfItems() -> Int {
         results.count
     }
     
     func getItem(index: Int) -> Repository {
-        results[index]
+        return results[index]
     }
     
     func didSelectRow(index: Int) {

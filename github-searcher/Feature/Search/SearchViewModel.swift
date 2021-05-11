@@ -9,6 +9,7 @@ import Foundation
 
 protocol SearchViewModelDelegate: AnyObject {
     func didReceive(_ viewModel: SearchViewModelType, results: [Repository])
+    func didEmptyTextfield(_ viewModel: SearchViewModelType)
 }
 
 protocol SearchViewModelType {
@@ -28,6 +29,14 @@ final class SearchViewModel: SearchViewModelType {
     }
     
     func search(repoName: String) {
+        if repoName == "" {
+            delegate?.didEmptyTextfield(self)
+        } else {
+            searchforRepo(repoName: repoName)
+        }
+    }
+    
+    private func searchforRepo(repoName: String) {
         guard let hostName = Bundle.main.object(forInfoDictionaryKey: Constants.hostNameString) as? String else { return }
         let string = hostName + Constants.endpointString + Constants.repoParam + repoName
         guard let url = URL(string: string), let data = try? Data(contentsOf: url) else { return }

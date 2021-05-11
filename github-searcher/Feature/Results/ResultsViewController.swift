@@ -11,11 +11,19 @@ import TinyConstraints
 final class ResultsViewController: UIViewController {
     
     private struct Constants {
-        static let cellHeight: CGFloat = 100
+        static let numberOfLinesLabel = 2
+        static let labelWidth: CGFloat = 320
+        static let cellHeight: CGFloat = 70
+        static let labelHeight: CGFloat = 44
+        static let separator = " -> "
         static let cellName = "cell"
+        static let likesString = " likes"
+        static let message = "Sorry. We couldn’t find any repositories matching you search"
     }
     
     private var tableView = UITableView()
+    private let messageLabel = UILabel()
+    
     private var viewModel: ResultsViewModelType
     
     init(viewModel: ResultsViewModelType) {
@@ -31,6 +39,7 @@ final class ResultsViewController: UIViewController {
         super.viewDidLoad()
         
         setupTableView()
+        setupLabel()
     }
     
     private func setupTableView() {
@@ -39,6 +48,26 @@ final class ResultsViewController: UIViewController {
         
         tableView.delegate = self
         tableView.dataSource = self
+        
+        tableView.backgroundView = UIView()
+        tableView.backgroundView?.addSubview(messageLabel)
+    }
+    
+    private func setupLabel() {
+        messageLabel.centerInSuperview()
+        messageLabel.width(Constants.labelWidth)
+        messageLabel.height(Constants.labelHeight)
+        messageLabel.text = ""
+        messageLabel.textAlignment = .center
+        messageLabel.numberOfLines = Constants.numberOfLinesLabel
+        
+        if viewModel.isEmpty() {
+            messageLabel.text = Constants.message
+            tableView.separatorStyle = .none
+        } else {
+            messageLabel.text = ""
+            tableView.separatorStyle = .singleLine
+        }
     }
 }
 
@@ -53,11 +82,10 @@ extension ResultsViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .subtitle, reuseIdentifier: Constants.cellName)
-        
         let item = viewModel.getItem(index: indexPath.row)
         
         cell.textLabel?.text = item.fullName
-        cell.detailTextLabel?.text = item.language
+        cell.detailTextLabel?.text = (item.language ?? "") + Constants.separator + String(item.stargazersCount) + Constants.likesString
         
         return cell
     }
